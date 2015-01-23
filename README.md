@@ -30,3 +30,9 @@ Now it's time to introduce templates. They can be placed anywhere on the host an
 ## Step 7: register, ignore_errors and when
 
 Our webserver should run PHP code. So let's add a new role with tasks that install PHP and composer (the PHP package manager). PHP installation through apt is straightforward and nothing new for you. But look at those tasks to install composer. The first one is not even installing composer but just checking if it's already there (using `which composer.phar`). The register syntax is used to store the result of a task in a variable. `ignore_errors` means that if this command fails, nothing bad happens. The ansible run is not stopped and the task will be marked as "ok" internally. And finally there is `changed_when` which can be used to change the way ansible detects if a task changed anything. The registered variable is used in the next task with the `when` syntax. It means the task is only executed if the `when` statement evaluates to true. So, if `which composer.phar` fails, we install composer.
+
+## Step 8: Know your modules
+
+Do you know that you can install composer with 2 lines instead of ~10 as we just did? The `shell` module we used to install composer takes an option `creates`. You can specify a filesystem path. If it exists, the task won't run.
+
+So why did I not tell you this at first? For one, I wanted to show you how to work with `register` and `when`. And I also wanted to make a point to learn about the different modules. For every task, look at the modules available (see [http://docs.ansible.com/list_of_all_modules.html](http://docs.ansible.com/list_of_all_modules.html)). Many common tasks are already covered. Also have a look at the options for the modules you are using, because they can make the difference between 10 ugly lines and 2 pretty clear lines of yaml code.
