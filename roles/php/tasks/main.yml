@@ -1,0 +1,16 @@
+---
+- name: install php packages
+  apt: pkg={{ item }} state=present
+  with_items:
+  - php5-cli
+  - php5-curl
+  - php5-fpm
+  - php5-intl
+- name: check if composer is installed
+  command: which composer.phar
+  register: composer_check
+  ignore_errors: yes
+  changed_when: False
+- name: install composer
+  shell: curl -sS https://getcomposer.org/installer | php chdir=/usr/local/bin
+  when: composer_check|failed
