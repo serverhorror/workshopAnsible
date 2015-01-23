@@ -1,3 +1,9 @@
 ---
 - name: install nginx
   apt: pkg=nginx state=present
+- name: delete nginx default virtualhost
+  file: path=/etc/nginx/{{ item }}/default state=absent
+  notify: restart nginx
+  with_items:
+  - sites-available
+  - sites-enabled
