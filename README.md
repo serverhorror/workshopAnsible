@@ -22,3 +22,7 @@ This is nice, but what about reusing tasks? What about repeating common things o
 ## Step 5: We are getting there
 
 If you install nginx, most likely you want to remove the default virtualhost. So let's remove the file and the symlink placed at `/etc/nginx/sites-available/default` and `/etc/nginx/sites-enabled/default`. We are using a new syntax `with_items` for this task. It's like a foreach loop. The `{{ item }}` is replaced with the actual item from the `with_items` list. You'll also notice the `notify` syntax. With them you can instruct ansible to run a handler with this name each time it executes the task. A handler is defined in the `handlers` folder within a role. Run `ansible-playbook -i hosts site.yml` to check it out.
+
+## Step 6: Templates and variables
+
+Now it's time to introduce templates. They can be placed anywhere on the host and the variables inside are replaced by ansible with the value set for one host or one group. In our case, we'll place the gninx.conf file onto the webservers and the variable within is replaced with the value from `group_vars/webservers`. Variables can be placed in many places, but that's a story for another time. Run our command (you should know it by now!) and you'll be able to connect to [http://192.168.33.150](http://192.168.33.150) in your browser and see a response.
