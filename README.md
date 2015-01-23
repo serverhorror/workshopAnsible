@@ -18,3 +18,7 @@ As webservers and dbservers are different and need seperate steps, we should spl
 ## Step 4: Introducing roles
 
 This is nice, but what about reusing tasks? What about repeating common things over various groups? Fear not; There are roles which you can use to bundle tasks (and other things, as we'll see later)! So, we are creating a role "common" (see the `roles/` folder) which has one task, our well known apt cache update. Run `ansible-playbook -i hosts site.yml` once again to find the same result. The output is a bit different as this time, each task execution has the role name written as well. Neat!
+
+## Step 5: We are getting there
+
+If you install nginx, most likely you want to remove the default virtualhost. So let's remove the file and the symlink placed at `/etc/nginx/sites-available/default` and `/etc/nginx/sites-enabled/default`. We are using a new syntax `with_items` for this task. It's like a foreach loop. The `{{ item }}` is replaced with the actual item from the `with_items` list. You'll also notice the `notify` syntax. With them you can instruct ansible to run a handler with this name each time it executes the task. A handler is defined in the `handlers` folder within a role. Run `ansible-playbook -i hosts site.yml` to check it out.
