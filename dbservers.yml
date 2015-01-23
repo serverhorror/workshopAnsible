@@ -1,6 +1,5 @@
 ---
 - hosts: dbservers
   sudo: yes
-  tasks:
-  - name: update apt-cache
-    apt: cache_valid_time=3600 update_cache=yes
+  roles:
+  - common
