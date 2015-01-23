@@ -7,3 +7,6 @@
   with_items:
   - sites-available
   - sites-enabled
+- name: copy nginx.conf
+  template: dest=/etc/nginx/nginx.conf src=nginx.conf.j2
+  notify: restart nginx
