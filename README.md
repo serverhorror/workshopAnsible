@@ -36,3 +36,11 @@ Our webserver should run PHP code. So let's add a new role with tasks that insta
 Do you know that you can install composer with 2 lines instead of ~10 as we just did? The `shell` module we used to install composer takes an option `creates`. You can specify a filesystem path. If it exists, the task won't run.
 
 So why did I not tell you this at first? For one, I wanted to show you how to work with `register` and `when`. And I also wanted to make a point to learn about the different modules. For every task, look at the modules available (see [http://docs.ansible.com/list_of_all_modules.html](http://docs.ansible.com/list_of_all_modules.html)). Many common tasks are already covered. Also have a look at the options for the modules you are using, because they can make the difference between 10 ugly lines and 2 pretty clear lines of yaml code.
+
+## Step 9: Get the facts straight!
+
+Working with information from a remote host to set it up is not something that is uncommon. You may have a heterogeneous setup with different operating systems or different hardware. Running specific commands only on specific systems can be tricky. Luckily, Ansible got us covered: Through so-called "Facts" it registers variables holding information about the system the command is run. We can use this in combination with `when` or in templates.
+
+Before we get to use facts, let's look at the `hosts` file. We now use an alias for each system. Our "common" role has a new file, `tasks/network.yml`. Ansible always uses the `tasks/main.yml` when executing tasks, so adding an `include` line there does the trick of also executing the tasks in the `network.yml`. In this file, we first set the hostname to the variable `inventory_hostname`. It contains the alias from our hosts file. The other tasks replaces each line that matches the regex we specified with the content we specified. It ensures that our current hostname is known to the system and maps to our localhost.
+
+The third task shows how powerful Ansible is when different features get combined. We are again working on the hosts file. This time, we want to make sure that each host knows each other by his hostname. You see `with_items` not being a list of key/value pairs but rather a dictionary. Each dictionary contains the ip for each host from the `hosts` file and the hostname which was extracted from the Facts.
