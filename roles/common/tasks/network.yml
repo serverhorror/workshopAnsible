@@ -1,0 +1,11 @@
+---
+- name: set hostname
+  hostname: name={{ inventory_hostname }}
+- name: update hosts file
+  lineinfile: dest=/etc/hosts line="127.0.0.1 localhost {{ ansible_hostname }}" regexp="^127\.0\.0\.1" state=present
+- name: add all servers to hosts file
+  lineinfile: dest=/etc/hosts line="{{ item.ip }} {{ item.hostname }}" regexp="^{{ item.ip }}" state=present
+  with_items:
+  - { ip: "{{ hostvars['web1']['ansible_ssh_host'] }}", hostname: "{{ hostvars['web1']['ansible_hostname'] }}" }
+  - { ip: "{{ hostvars['web2']['ansible_ssh_host'] }}", hostname: "{{ hostvars['web2']['ansible_hostname'] }}" }
+  - { ip: "{{ hostvars['db']['ansible_ssh_host'] }}", hostname: "{{ hostvars['db']['ansible_hostname'] }}" }
