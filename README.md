@@ -50,3 +50,11 @@ The third task shows how powerful Ansible is when different features get combine
 A role can be made highly configurable and therefor shareable with some easy additions. Look at the nginx role. Notice the additional directories that where added. The first one is called `defaults` and the `main.yml` in it holds the default values for variables. These defaults can be overwritten by defining the same variable name somewhere else. The second directory is `files`, which is nearly the same as templates only that files in here are not run through the Jinja2 templating enginge and are therefor not changed. The `meta` directory holds various information about a role. Almost all of them are only needed if you wanna share the role on [Ansible Galaxy](https://galaxy.ansible.com/). I only added the `dependencies` key which can be used to define dependencies of this role. The roles it depends on are then run before any task of this particular role.
 
 The last directory is `vars`, which can be used to store variables **Which should not be overwritten**. So, `defaults` holds variables that can be overwritten, vars holds the ones which cannot be overwritten outside of the role. They can be useful to hold defaults which are then overwritten by tasks inside the role. Or to indicate to people copying the role how they can change certain behaviour.
+
+## Step 11: Go and explore yourself
+
+So, here we are. You now know a bit about ansible. There is much more to explore. You can do amazing things with variables and facts and by plugging them into templates and such. There is also more that I didn't talk about: Dynamic Inventory that let you use an API to definy the servers and which groups they belong to. Local Lookups and delegation which make it possible to run stuff on the localhost or another remote host while executing tasks. There are tags to add more structure and vaults to hide data in encrypted containers.
+
+But you don't need to know about this now. Start with setting up something simple. If you cannot get any further with what you know about right now, see if ansible has a solution.
+
+Have fun!
